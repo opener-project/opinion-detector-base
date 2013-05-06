@@ -9,7 +9,7 @@ opinions and extract three elements for each opinion:
 * Opinion holder
 * Opinion target
 
-This module works for English, and it has been trained using a small corpus annotated manually by 2 annotators at the VUA. The input of this module has to be a KAF
+This module works for **English** and **Dutch**, and it has been trained using a small corpus annotated manually by 2 annotators at the VUA. The input of this module has to be a KAF
 file, preferably with text, term (with pos and polarity), entity and property layers, as they will be used to extract the features for the system. In case there are some layers missing
 in the input KAF, the module will still work, but some features won't be available and the performance can be punished. The output is the KAF file extended with
 the opinion layer.
@@ -26,7 +26,7 @@ The installation of this module is very easy, you need just to clone the reposit
 ````shell
 git clone git@github.com:opener-project/VU-opinion-detector-deluxe_EN-kernel.git
 ````
-Then you need to tell the module where Mallet is installed in your local machine. For this purpose you have to edit the script core/opinion_miner_mallet_en.py and
+Then you need to tell the module where Mallet is installed in your local machine. For this purpose you have to edit the script *core/opinion_miner_mallet.py* and
 modify the path of the variable MALLET_PATH to point to your local folder of Mallet.
 ```shell
 ## SET THIS VALUE TO YOU LOCAL FOLDER OF MALLET
@@ -62,7 +62,7 @@ How to run the system with Python
 You can run this module from the command line using Python. The main script is  core/opinion_miner_mallet_en.py. This script reads the KAF from the standard input
 and writes the output to the standard output, generating some log information in the standard error output. To process one file just run:
 ````shell
-cat input.kaf |  core/opinion_miner_mallet_en.py > output.kaf
+cat input.kaf |  core/opinion_miner_mallet.py > output.kaf
 ````
 
 This will read the KAF file in "input.kaf" and will store the constituent trees in "output.kaf".

@@ -17,11 +17,22 @@ MALLET_PATH = '/Users/ruben/mallet-2.0.7'
 
 ###############################################
 
-#Internal variables, do not modify these
+#Internal variables, do not modify these ones
 __module_dir = os.path.dirname(__file__)
 __mallet_class_path = os.path.join(MALLET_PATH,'class')+':'+os.path.join(MALLET_PATH,'lib','mallet-deps.jar')
-__mallet_model_exp = os.path.join(__module_dir,'models','model.mallet.exp.en')
-__mallet_model_hol_tar = os.path.join(__module_dir,'models','model.mallet.hol.tar.en')
+__mallet_model_dir = os.path.join(__module_dir,'models')
+
+## Language dependent configuration
+#For Dutch
+__mallet_model_exp_nl = os.path.join(__mallet_model_dir,'nl','model.mallet.exp.chantal.nl')     ##model.mallet.exp.chantal[.femke].nl
+__mallet_model_hol_tar_nl = os.path.join(__mallet_model_dir,'nl','model.mallet.hol.tar.chantal.nl') ## model.mallet.hol.tar.chantal[.femke.]nl
+
+#For English
+__mallet_model_exp_en = os.path.join(__mallet_model_dir,'en','model.mallet.exp.chantal.en')         ## model.mallet.exp.chantal[.femke].en
+__mallet_model_hol_tar_en = os.path.join(__mallet_model_dir,'en','model.mallet.hol.tar.chantal.en') ## model.mallet.hol.tar.chantal[.femke.]en
+
+
+
 
 
 class Opinion:
@@ -134,11 +145,22 @@ except Exception as e:
     sys.exit(-1)
     
     
-lang = kaf_obj.getLanguage()
+my_lang = kaf_obj.getLanguage()
 
-if lang != 'en':
-  print>>sys.stdout,'Language error in KAF. Found '+lang+' and must be en (English)'
+if my_lang == 'nl':
+  __mallet_model_exp = __mallet_model_exp_nl
+  __mallet_model_hol_tar = __mallet_model_hol_tar_nl
+elif my_lang == 'en':
+  __mallet_model_exp = __mallet_model_exp_en
+  __mallet_model_hol_tar = __mallet_model_hol_tar_en
+else:
+  print>>sys.stdout,'Error, the language is "'+my_lang+'" and only can be "nl" for Dutch or "en" for English'
   sys.exit(-1)
+
+  
+logging.debug('Language of the KAF file:'+my_lang)
+logging.debug('Model for opinion expression '+__mallet_model_exp)
+logging.debug('Model for holder and targets '+__mallet_model_hol_tar)
   
 ## Extracting tokens
 token_data = {} ## token_data['w_1'] = ('house','s_1')
