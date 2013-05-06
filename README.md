@@ -1,4 +1,4 @@
-VU-opinion-detector-deluxe_EN-kernel
+VU-opinion-detector-deluxe_NL_EN-kernel
 =====================================
 
 Introduction
@@ -24,7 +24,7 @@ Installation
 -----------
 The installation of this module is very easy, you need just to clone the repository:
 ````shell
-git clone git@github.com:opener-project/VU-opinion-detector-deluxe_EN-kernel.git
+git clone git@github.com:opener-project/VU-opinion-detector-deluxe_NL_EN-kernel.git
 ````
 Then you need to tell the module where Mallet is installed in your local machine. For this purpose you have to edit the script *core/opinion_miner_mallet.py* and
 modify the path of the variable MALLET_PATH to point to your local folder of Mallet.
