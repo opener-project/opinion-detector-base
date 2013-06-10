@@ -266,7 +266,6 @@ for sent in sentences:
   
   #Step 3 --> call to the crfsuite tagger with the model
   crfsuite_tagger_cmd = CRF_SUITE_PATH+' tag -m '+__crfsuite_model+' '+fic_feats.name
-  print crfsuite_tagger_cmd
   crfsuite_tagger =Popen(crfsuite_tagger_cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
   opinion_classes = []
   for out_line in crfsuite_tagger.stdout:

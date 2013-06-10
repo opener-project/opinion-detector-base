@@ -1,5 +1,3 @@
-/Users/ruben/NLP_tools/crfsuite-0.12/bin/crfsuite tag -m ../../core/models/en/crfsuite.model /var/folders/cm/png9dlts1k7f37tg5kr1tr000000gn/T/tmpp53iWq
-/Users/ruben/NLP_tools/crfsuite-0.12/bin/crfsuite tag -m ../../core/models/en/crfsuite.model /var/folders/cm/png9dlts1k7f37tg5kr1tr000000gn/T/tmpLcH5KH
 <?xml version='1.0' encoding='UTF-8'?>
 <KAF xml:lang="en">
   <kafHeader>
