@@ -1,8 +1,6 @@
 VU-opinion-detector-deluxe_NL_EN-kernel
 =====================================
 
-crfsuite!!!!
-
 Introduction
 ------------
 This module implements the Deluxe version of the opinion mining using Machine Learning and the crfsuite toolkit (http://www.chokkan.org/software/crfsuite/). The module aims to detect
