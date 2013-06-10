@@ -1,0 +1,3 @@
+Models trained for nl and en, in the corresponding folders
+In each folder also the training data (both in TAB and CRF format) can be
+found

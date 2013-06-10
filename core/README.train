@@ -1,0 +1,39 @@
+=====================
+SCRIPTS IN THIS FOLDER
+=====================
+crfutils.py  --> script for generating the required input format for crfsuite
+extract_features.py  --> extracts features in TAB format from a corpus of KAF + TAG files
+feats_to_crf.py --> script that applies the templates and converts from TAB to CRF, considering context 
+my_classes.py  --> used by the script extract_features.py
+my_lib.py --> used by opinino_miner
+opinion_miner_crfsuite.py --> main script to annotate KAF file with opinions
+=====================
+
+===================
+ANNOTATING OPINIONS
+===================
+1) Modify the path to your local crfsuite in opinion_miner_crfsuite.py
+2) cat input.kaf | python opinion_miner_crfsuite.py > output.kaf (actually there are only models for en|nl)
+==================
+
+====================
+TRAINING A NEW MODEL
+====================
+1) Create the training basic data from all the corpus with extract_features.py
+    python extract_features.py opinion_corpus_(en|nl).txt > training
+    
+2) Extract all the features for the crfsuite
+    cat training | feats_to_crf.py > training.crf
+    
+3) Train the model with crfsuite
+    crfsuite learn -m model training.crf
+    
+4) Convert the test into CRF format
+    cat test | feats_to_crf.py > test.crf
+    
+5) Tag the test file
+    crfsuite tag -m model test.crf
+
+==================    
+
+    
