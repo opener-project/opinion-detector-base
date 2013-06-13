@@ -1,7 +1,6 @@
 GIT
   remote: git@github.com:opener-project/build-tools.git
   revision: a46735e7872b68b873c7f28f2d1929b39a6dd19c
-  branch: master
   specs:
     opener-build-tools (0.2.2)
       rake
