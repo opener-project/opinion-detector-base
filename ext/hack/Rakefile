@@ -4,9 +4,22 @@ require_relative 'support'
 desc 'Verifies the requirements'
 task :requirements do
   verify_requirements
+  require_executable("make")
 end
 
-task :default => :requirements do
+task :compile do
+  
+  Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "liblbfgs")) do
+    compile(["--prefix=#{VENDOR_LOCAL_DIRECTORY}"])
+  end
+  
+  Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "crfsuite")) do
+    compile(["--prefix=#{VENDOR_LOCAL_DIRECTORY}", "--with-liblbfgs=#{VENDOR_LOCAL_DIRECTORY}"])
+  end
+
+end
+
+task :default => [:requirements, :compile] do
   path = File.join(PYTHON_SITE_PACKAGES, 'pre_install')
 
   pip_install(PRE_INSTALL_REQUIREMENTS, path)

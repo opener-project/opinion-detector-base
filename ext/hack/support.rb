@@ -27,6 +27,10 @@ PRE_INSTALL_REQUIREMENTS = File.expand_path(
   __FILE__
 )
 
+VENDOR_LOCAL_DIRECTORY   = File.expand_path('../../../core/vendor/local', __FILE__)
+VENDOR_SRC_DIRECTORY     = File.expand_path('../../../core/vendor/src', __FILE__)
+
+
 ##
 # Verifies the requirements to install thi Gem.
 #
@@ -34,4 +38,10 @@ def verify_requirements
   require_executable('python')
   require_version('python', python_version, '2.7.0')
   require_executable('pip')
+end
+
+def compile(args=[])
+  system "./configure #{args.join(' ')}"
+  system 'make'
+  system 'make install'
 end

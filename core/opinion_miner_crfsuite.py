@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
-from lxml import etree
+
 import sys
 import getopt
-from VUKafParserPy import KafParser
 from collections import defaultdict
 from operator import itemgetter
 import logging
@@ -13,8 +12,18 @@ import tempfile
 import os
 from feats_to_crf import extract_features
 
+this_folder = os.path.dirname(os.path.realpath(__file__))
+
+# This updates the load path to ensure that the local site-packages directory
+# can be used to load packages (e.g. a locally installed copy of lxml).
+sys.path.append(os.path.join(this_folder, 'site-packages/pre_build'))
+sys.path.append(os.path.join(this_folder, 'site-packages/pre_install'))
+
+from lxml import etree
+from VUKafParserPy import KafParser
+
 ## SET THIS VALUE TO YOU LOCAL FOLDER OF MALLET
-CRF_SUITE_PATH = '/Users/ruben/NLP_tools/crfsuite-0.12/bin/crfsuite'
+CRF_SUITE_PATH = os.path.join(this_folder, '../vendor/build/bin/crfsuite')
 
 ###############################################
 
