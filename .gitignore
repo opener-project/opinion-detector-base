@@ -39,3 +39,6 @@ pip-log.txt
 # Ignore the Python package files.
 core/site-packages/pre_build/*
 core/site-packages/pre_install/*
+core/vendor/build/*
+
+!.gitkeep
