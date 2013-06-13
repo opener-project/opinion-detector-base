@@ -29,7 +29,13 @@ nosetests.xml
 # Translations
 *.mo
 
-# Mr Developer
+# Python related files.
+*.py[cod]
+pip-log.txt
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Ignore the Python package files.
+core/site-packages/pre_build/*
+core/site-packages/pre_install/*
