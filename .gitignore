@@ -38,7 +38,8 @@ pip-log.txt
 core/site-packages/pre_build/*
 core/site-packages/pre_install/*
 core/vendor/build/*
-config.log
+core/vendor/src/crfsuite/config.log
+core/vendor/src/liblbfgs/config.log
 .libs/*
 
 !.gitkeep
