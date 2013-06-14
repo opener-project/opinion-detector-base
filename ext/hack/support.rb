@@ -27,9 +27,9 @@ PRE_INSTALL_REQUIREMENTS = File.expand_path(
   __FILE__
 )
 
-VENDOR_LOCAL_DIRECTORY   = File.expand_path('../../../core/vendor/local', __FILE__)
+VENDOR_DIRECTORY   = File.expand_path('../../../core/vendor', __FILE__)
+VENDOR_BUILD_DIRECTORY   = File.expand_path('../../../core/vendor/build', __FILE__)
 VENDOR_SRC_DIRECTORY     = File.expand_path('../../../core/vendor/src', __FILE__)
-
 
 ##
 # Verifies the requirements to install thi Gem.

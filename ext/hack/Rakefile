@@ -10,11 +10,11 @@ end
 task :compile do
   
   Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "liblbfgs")) do
-    compile(["--prefix=#{VENDOR_LOCAL_DIRECTORY}"])
+    compile(["--prefix=#{VENDOR_BUILD_DIRECTORY}"])
   end
   
   Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "crfsuite")) do
-    compile(["--prefix=#{VENDOR_LOCAL_DIRECTORY}", "--with-liblbfgs=#{VENDOR_LOCAL_DIRECTORY}"])
+    compile(["--prefix=#{VENDOR_BUILD_DIRECTORY}", "--with-liblbfgs=#{VENDOR_BUILD_DIRECTORY}"])
   end
 
 end

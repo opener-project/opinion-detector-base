@@ -32,7 +32,7 @@ libcrfsuite_la-train_lbfgs.lo libcrfsuite_la-train_lbfgs.o:  \
   /usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/mmintrin.h \
   /usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/mm_malloc.h \
   /usr/include/errno.h /usr/include/sys/errno.h \
-  /Users/johnmelidis/Sites/opener/opinion-detector-base/core/vendor/local/include/lbfgs.h
+  /Users/johnmelidis/Sites/opener/opinion-detector-base/core/vendor/build/include/lbfgs.h
 
 ../../config.h:
 
@@ -156,4 +156,4 @@ src/vecmath.h:
 
 /usr/include/sys/errno.h:
 
-/Users/johnmelidis/Sites/opener/opinion-detector-base/core/vendor/local/include/lbfgs.h:
+/Users/johnmelidis/Sites/opener/opinion-detector-base/core/vendor/build/include/lbfgs.h:

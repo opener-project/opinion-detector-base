@@ -101,14 +101,14 @@ EGREP = /usr/bin/grep -E
 EXEEXT = 
 FGREP = /usr/bin/grep -F
 GREP = /usr/bin/grep
-INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/include -I$(srcdir) -I/Users/johnmelidis/Sites/opener/opinion-detector-base/core/vendor/local/include
+INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/include -I$(srcdir) -I/Users/johnmelidis/Sites/opener/opinion-detector-base/core/vendor/build/include
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LD = /usr/llvm-gcc-4.2/libexec/gcc/i686-apple-darwin11/4.2.1/ld
-LDFLAGS =  -L/Users/johnmelidis/Sites/opener/opinion-detector-base/core/vendor/local/lib
+LDFLAGS =  -L/Users/johnmelidis/Sites/opener/opinion-detector-base/core/vendor/build/lib
 LIBOBJS = 
 LIBS = -llbfgs -lm 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
@@ -180,7 +180,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(top_builddir)/./install-sh -c -d
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /Users/johnmelidis/Sites/opener/opinion-detector-base/core/vendor/local
+prefix = /Users/johnmelidis/Sites/opener/opinion-detector-base/core/vendor/build
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -211,7 +211,7 @@ crfsuite_SOURCES = \
 
 #crfsuite_CPPFLAGS =
 AM_CFLAGS = -mfpmath=sse -msse2 -DUSE_SSE -O3 -fomit-frame-pointer -ffast-math -Winline -std=c99 
-AM_LDFLAGS =  -L/Users/johnmelidis/Sites/opener/opinion-detector-base/core/vendor/local/lib
+AM_LDFLAGS =  -L/Users/johnmelidis/Sites/opener/opinion-detector-base/core/vendor/build/lib
 crfsuite_CFLAGS = -I$(top_builddir)/include
 crfsuite_LDADD = $(top_builddir)/lib/crf/libcrfsuite.la
 all: all-am

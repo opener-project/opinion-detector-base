@@ -23,7 +23,7 @@ from lxml import etree
 from VUKafParserPy import KafParser
 
 ## SET THIS VALUE TO YOU LOCAL FOLDER OF MALLET
-CRF_SUITE_PATH = os.path.join(this_folder, '../vendor/build/bin/crfsuite')
+CRF_SUITE_PATH = os.path.join(this_folder, 'vendor/build/bin/crfsuite')
 
 ###############################################
 
