@@ -34,13 +34,41 @@ pip-log.txt
 .project
 .pydevproject
 
-# Ignore the Python package files.
+# Ignore the package files.
 core/site-packages/pre_build/*
 core/site-packages/pre_install/*
 core/vendor/build/*
 config.log
 .libs
 .deps
-core/vendor/src/crfsuite/**/*.*o
+/core/vendor/src/crfsuite/**/*.*o
+/core/vendor/src/crfsuite/**/**/*.*o
+/core/vendor/src/liblbfgs/**/*.*o
+/core/vendor/src/liblbfgs/**/**/*.*o
+
+
+core/vendor/src/crfsuite/Makefile
+core/vendor/src/crfsuite/config.h
+core/vendor/src/crfsuite/config.status
+core/vendor/src/crfsuite/frontend/Makefile
+core/vendor/src/crfsuite/frontend/crfsuite
+core/vendor/src/crfsuite/genbinary.sh
+core/vendor/src/crfsuite/include/Makefile
+core/vendor/src/crfsuite/lib/cqdb/Makefile
+core/vendor/src/crfsuite/lib/cqdb/libcqdb.la
+core/vendor/src/crfsuite/lib/crf/Makefile
+core/vendor/src/crfsuite/lib/crf/libcrfsuite.la
+core/vendor/src/crfsuite/libtool
+core/vendor/src/crfsuite/stamp-h1
+core/vendor/src/crfsuite/swig/Makefile
+core/vendor/src/liblbfgs/Makefile
+core/vendor/src/liblbfgs/config.h
+core/vendor/src/liblbfgs/config.status
+core/vendor/src/liblbfgs/lib/Makefile
+core/vendor/src/liblbfgs/lib/liblbfgs.la
+core/vendor/src/liblbfgs/libtool
+core/vendor/src/liblbfgs/sample/Makefile
+core/vendor/src/liblbfgs/sample/sample
+core/vendor/src/liblbfgs/stamp-h1
 
 !.gitkeep
