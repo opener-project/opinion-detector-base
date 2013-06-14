@@ -27,9 +27,17 @@ PRE_INSTALL_REQUIREMENTS = File.expand_path(
   __FILE__
 )
 
-VENDOR_DIRECTORY   = File.expand_path('../../../core/vendor', __FILE__)
-VENDOR_BUILD_DIRECTORY   = File.expand_path('../../../core/vendor/build', __FILE__)
-VENDOR_SRC_DIRECTORY     = File.expand_path('../../../core/vendor/src', __FILE__)
+# Path to the vendor directory for C code.
+VENDOR_DIRECTORY = File.expand_path('../../../core/vendor', __FILE__)
+
+# Path to the directory to install vendored C code into.
+VENDOR_BUILD_DIRECTORY = File.expand_path(
+  '../../../core/vendor/build',
+  __FILE__
+)
+
+# Path to the directory that contains the source C code to compile.
+VENDOR_SRC_DIRECTORY = File.expand_path('../../../core/vendor/src', __FILE__)
 
 ##
 # Verifies the requirements to install thi Gem.
@@ -40,8 +48,32 @@ def verify_requirements
   require_executable('pip')
 end
 
-def compile(args=[])
+##
+# Compiles C code in the current directory using `make`.
+#
+# @param [Array] args The arguments to pass to ./configure
+#
+def compile(args = [])
   system "./configure #{args.join(' ')}"
   system 'make'
   system 'make install'
+  system 'make distclean'
+end
+
+##
+# Compiles the C code found in src/vendor.
+#
+def compile_vendored_code
+  Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "liblbfgs")) do
+    compile(["--prefix=#{VENDOR_BUILD_DIRECTORY}"])
+  end
+
+  Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "crfsuite")) do
+    compile(
+      [
+        "--prefix=#{VENDOR_BUILD_DIRECTORY}",
+        "--with-liblbfgs=#{VENDOR_BUILD_DIRECTORY}"
+      ]
+    )
+  end
 end

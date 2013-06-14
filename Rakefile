@@ -26,16 +26,9 @@ task :clean => [
 
 desc 'Alias for python:compile'
 task :compile do
-  'python:compile'
-  
-  Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "liblbfgs")) do
-    compile(["--prefix=#{VENDOR_BUILD_DIRECTORY}"])
-  end
-  
-  Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "crfsuite")) do
-    compile(["--prefix=#{VENDOR_BUILD_DIRECTORY}", "--with-liblbfgs=#{VENDOR_BUILD_DIRECTORY}"])
-  end
-  
+  compile_vendored_code
+
+  Rake::Task['python:compile'].invoke
 end
 
 desc 'Runs the tests'

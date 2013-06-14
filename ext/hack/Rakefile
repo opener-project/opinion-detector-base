@@ -7,19 +7,11 @@ task :requirements do
   require_executable("make")
 end
 
-task :compile do
-  
-  Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "liblbfgs")) do
-    compile(["--prefix=#{VENDOR_BUILD_DIRECTORY}"])
-  end
-  
-  Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "crfsuite")) do
-    compile(["--prefix=#{VENDOR_BUILD_DIRECTORY}", "--with-liblbfgs=#{VENDOR_BUILD_DIRECTORY}"])
-  end
-
+task :compile => :requirements do
+  compile_vendored_code
 end
 
-task :default => [:requirements, :compile] do
+task :default => [:compile] do
   path = File.join(PYTHON_SITE_PACKAGES, 'pre_install')
 
   pip_install(PRE_INSTALL_REQUIREMENTS, path)
