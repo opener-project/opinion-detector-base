@@ -25,7 +25,18 @@ task :clean => [
 ]
 
 desc 'Alias for python:compile'
-task :compile => 'python:compile'
+task :compile do
+  'python:compile'
+  
+  Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "liblbfgs")) do
+    compile(["--prefix=#{VENDOR_BUILD_DIRECTORY}"])
+  end
+  
+  Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "crfsuite")) do
+    compile(["--prefix=#{VENDOR_BUILD_DIRECTORY}", "--with-liblbfgs=#{VENDOR_BUILD_DIRECTORY}"])
+  end
+  
+end
 
 desc 'Runs the tests'
 task :test => :compile do
