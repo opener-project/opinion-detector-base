@@ -41,5 +41,6 @@ core/vendor/build/*
 config.log
 .libs
 .deps
+core/vendor/src/crfsuite/**/*.*o
 
 !.gitkeep
