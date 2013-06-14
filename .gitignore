@@ -40,5 +40,6 @@ core/site-packages/pre_install/*
 core/vendor/build/*
 config.log
 .libs
+.deps
 
 !.gitkeep
