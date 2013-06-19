@@ -80,19 +80,22 @@
     </entity>
   </entities>
   <opinions>
-    <opinion oid="o_1">
+    <opinion oid="o1">
       <opinion_holder>
         <span/>
       </opinion_holder>
       <opinion_target>
         <span>
-          <target id="t_6"/>
+          <target id="t_1"/>
         </span>
       </opinion_target>
       <opinion_expression polarity="positive" strength="1">
         <span>
           <target id="t_4"/>
           <target id="t_5"/>
+          <target id="t_6"/>
+          <target id="t_7"/>
+          <target id="t_8"/>
         </span>
       </opinion_expression>
     </opinion>

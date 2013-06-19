@@ -24,6 +24,7 @@ from VUKafParserPy import KafParser
 
 # Path to the locally installed version of crfsuite.
 CRF_SUITE_PATH = os.path.join(this_folder, 'vendor/build/bin/crfsuite')
+#CRF_SUITE_PATH = '/Users/ruben/NLP_tools/crfsuite-0.12/bin/crfsuite'
 
 ###############################################
 
@@ -31,8 +32,8 @@ CRF_SUITE_PATH = os.path.join(this_folder, 'vendor/build/bin/crfsuite')
 __module_dir = os.path.dirname(__file__)
 __model_dir = os.path.join(__module_dir,'models')
 
-__crfsuite_model_en = os.path.join(__model_dir,'en','crfsuite.model')
-__crfsuite_model_nl = os.path.join(__model_dir,'nl','crfsuite.model')
+__crfsuite_model_en = os.path.join(__model_dir,'en','crfsuite.en.19-jun-2013.model')
+__crfsuite_model_nl = os.path.join(__model_dir,'nl','crfsuite.nl.19-jun-2013.model')
 
 
 
