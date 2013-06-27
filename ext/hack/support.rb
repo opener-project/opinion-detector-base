@@ -46,6 +46,7 @@ def verify_requirements
   require_executable('python')
   require_version('python', python_version, '2.7.0')
   require_executable('pip')
+  require_version('pip', pip_version, '1.3.1')
 end
 
 ##
@@ -53,27 +54,25 @@ end
 #
 # @param [Array] args The arguments to pass to ./configure
 #
-def compile(args = [])
-  system "./configure #{args.join(' ')}"
-  system 'make'
-  system 'make install'
-  system 'make distclean'
+def compile(*args)
+  sh "./configure #{args.join(' ')}"
+  sh 'make'
+  sh 'make install'
+  sh 'make distclean'
 end
 
 ##
 # Compiles the C code found in src/vendor.
 #
 def compile_vendored_code
-  Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "liblbfgs")) do
-    compile(["--prefix=#{VENDOR_BUILD_DIRECTORY}"])
+  src   = VENDOR_SRC_DIRECTORY
+  build = VENDOR_BUILD_DIRECTORY
+
+  Dir.chdir(File.join(src, "liblbfgs")) do
+    compile("--prefix=#{build}")
   end
 
-  Dir.chdir(File.join(VENDOR_SRC_DIRECTORY, "crfsuite")) do
-    compile(
-      [
-        "--prefix=#{VENDOR_BUILD_DIRECTORY}",
-        "--with-liblbfgs=#{VENDOR_BUILD_DIRECTORY}"
-      ]
-    )
+  Dir.chdir(File.join(src, "crfsuite")) do
+    compile("--prefix=#{build}", "--with-liblbfgs=#{build}")
   end
 end
