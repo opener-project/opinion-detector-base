@@ -85,13 +85,10 @@
         <span/>
       </opinion_holder>
       <opinion_target>
-        <span>
-          <target id="t_1"/>
-        </span>
+        <span/>
       </opinion_target>
       <opinion_expression polarity="positive" strength="1">
         <span>
-          <target id="t_4"/>
           <target id="t_5"/>
           <target id="t_6"/>
           <target id="t_7"/>

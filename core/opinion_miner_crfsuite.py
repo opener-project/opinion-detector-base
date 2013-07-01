@@ -174,11 +174,20 @@ term_data = {}
 term_for_token = {}
 for term_obj in kaf_obj.getTerms():
   term_id = str(term_obj.getId())
-  term_lemma = str(term_obj.getLemma())
-  term_pos = str(term_obj.getPos())
+  term_lemma = term_obj.getLemma()
+  if term_lemma is None:
+    term_lemma = 'None'
+  term_pos = term_obj.getPos()
+  if term_pos is None:
+    term_pos = 'None'
+    
   term_span = term_obj.get_list_span()
-  polarity = str(term_obj.get_polarity())
+  polarity = term_obj.get_polarity()
+  if polarity is None: polarity = 'None'
+  
   modifier = str(term_obj.get_sentiment_modifier())
+  if modifier is None: modifier = 'None'
+  
   print>>sys.stderr,term_id.encode('utf-8'),term_lemma.encode('utf-8'),term_pos.encode('utf-8'),term_span,polarity.encode('utf-8'),modifier.encode('utf-8')
 
   term_data[term_id] = (term_lemma,term_pos,term_span,polarity,modifier)
