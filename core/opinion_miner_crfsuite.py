@@ -173,13 +173,13 @@ for token, s_id, w_id in kaf_obj.getTokens():
 term_data = {}
 term_for_token = {}
 for term_obj in kaf_obj.getTerms():
-  term_id = term_obj.getId()
-  term_lemma = term_obj.getLemma()
-  term_pos = term_obj.getPos()
+  term_id = str(term_obj.getId())
+  term_lemma = str(term_obj.getLemma())
+  term_pos = str(term_obj.getPos())
   term_span = term_obj.get_list_span()
-  polarity = term_obj.get_polarity()
-  modifier = term_obj.get_sentiment_modifier()
-  print>>sys.stderr,term_id,term_lemma,term_pos,term_span,polarity,modifier
+  polarity = str(term_obj.get_polarity())
+  modifier = str(term_obj.get_sentiment_modifier())
+  print>>sys.stderr,term_id.encode('utf-8'),term_lemma.encode('utf-8'),term_pos.encode('utf-8'),term_span,polarity.encode('utf-8'),modifier.encode('utf-8')
 
   term_data[term_id] = (term_lemma,term_pos,term_span,polarity,modifier)
   for tok_id in term_span:
