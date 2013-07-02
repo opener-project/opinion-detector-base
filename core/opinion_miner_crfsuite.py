@@ -141,9 +141,9 @@ logging.debug('Include timestamp: '+str(my_time_stamp))
 try:
     kaf_obj = KafParser(sys.stdin)
 except Exception as e:
-    print>>sys.stdout,'Error parsing input'
-    print>>sys.stdout,'Stream input must be a valid KAF file'
-    print>>sys.stdout,'Error: ',str(e)
+    print>>sys.stderr,'Error parsing input'
+    print>>sys.stderr,'Stream input must be a valid KAF file'
+    print>>sys.stderr,'Error: ',str(e)
     sys.exit(-1)
 
 
@@ -154,7 +154,7 @@ if my_lang == 'nl':
 elif my_lang == 'en':
   __crfsuite_model = __crfsuite_model_en
 else:
-  print>>sys.stdout,'Error, the language is "'+my_lang+'" and only can be "nl" for Dutch or "en" for English'
+  print>>sys.stderr,'Error, the language is "'+my_lang+'" and only can be "nl" for Dutch or "en" for English'
   sys.exit(-1)
 
 
@@ -180,14 +180,14 @@ for term_obj in kaf_obj.getTerms():
   term_pos = term_obj.getPos()
   if term_pos is None:
     term_pos = 'None'
-    
+
   term_span = term_obj.get_list_span()
   polarity = term_obj.get_polarity()
   if polarity is None: polarity = 'None'
-  
+
   modifier = str(term_obj.get_sentiment_modifier())
   if modifier is None: modifier = 'None'
-  
+
   print>>sys.stderr,term_id.encode('utf-8'),term_lemma.encode('utf-8'),term_pos.encode('utf-8'),term_span,polarity.encode('utf-8'),modifier.encode('utf-8')
 
   term_data[term_id] = (term_lemma,term_pos,term_span,polarity,modifier)
