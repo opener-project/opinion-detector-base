@@ -75,6 +75,7 @@
       </opinion_target>
       <opinion_expression polarity="positive" strength="1">
         <span>
+          <target id="t_4"/>
           <target id="t_5"/>
         </span>
       </opinion_expression>

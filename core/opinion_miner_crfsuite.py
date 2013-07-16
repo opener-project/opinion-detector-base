@@ -175,20 +175,20 @@ term_for_token = {}
 for term_obj in kaf_obj.getTerms():
   term_id = str(term_obj.getId())
   term_lemma = term_obj.getLemma()
-  if term_lemma is None:
-    term_lemma = 'None'
+  #if term_lemma is None:
+  #  term_lemma = 'None'
   term_pos = term_obj.getPos()
-  if term_pos is None:
-    term_pos = 'None'
-
+  #if term_pos is None:
+  #  term_pos = 'None'
+    
   term_span = term_obj.get_list_span()
   polarity = term_obj.get_polarity()
-  if polarity is None: polarity = 'None'
-
+  #if polarity is None: polarity = 'None'
+  
   modifier = str(term_obj.get_sentiment_modifier())
-  if modifier is None: modifier = 'None'
-
-  print>>sys.stderr,term_id.encode('utf-8'),term_lemma.encode('utf-8'),term_pos.encode('utf-8'),term_span,polarity.encode('utf-8'),modifier.encode('utf-8')
+  #if modifier is None: modifier = 'None'
+  
+  #print>>sys.stderr,term_id.encode('utf-8'),term_lemma.encode('utf-8'),term_pos.encode('utf-8'),term_span,polarity.encode('utf-8'),modifier.encode('utf-8')
 
   term_data[term_id] = (term_lemma,term_pos,term_span,polarity,modifier)
   for tok_id in term_span:
@@ -250,6 +250,7 @@ for sent in sentences:
     term_id = term_for_token[t_id]
     list_term_ids.append(term_id)
     term_lemma,term_pos,_,polarity,modifier = term_data[term_id]
+    print>>sys.stderr,t_id, term_data[term_id]
 
     feat_pol = 'None'
     if polarity is None and modifier is None:      feat_pol = 'None'
@@ -294,7 +295,7 @@ for sent in sentences:
   logging.debug('Opinion classes: '+' '.join(opinion_classes))
   os.remove(fic.name)
   os.remove(fic_feats.name)
-
+  
   op_exp_groups = extract_groups(opinion_classes,list_term_ids,['positiveExpression','negativeExpression'])
   holder_groups = extract_groups(opinion_classes,list_term_ids,['opinionHolder'])
   target_groups = extract_groups(opinion_classes,list_term_ids,['opinionTarget'])
