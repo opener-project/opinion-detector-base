@@ -22,6 +22,10 @@ sys.path.append(os.path.join(this_folder, 'site-packages/pre_install'))
 from lxml import etree
 from VUKafParserPy import KafParser
 
+
+__desc='VUA opinion miner. CRF deluxe'
+__last_edited='4nov2013'
+__version='1.0'
 # Path to the locally installed version of crfsuite.
 CRF_SUITE_PATH = os.path.join(this_folder, 'vendor/build/bin/crfsuite')
 #CRF_SUITE_PATH = '/Users/ruben/NLP_tools/crfsuite-0.12/bin/crfsuite'
@@ -348,7 +352,7 @@ for sent in sentences:
   ## NEXT SENTENCE
 
 
-kaf_obj.addLinguisticProcessor('Crfsuite machine learning opinion miner','1.0','opinions', my_time_stamp)
+kaf_obj.addLinguisticProcessor(__desc,__last_edited+'_'+__version,'opinions', my_time_stamp)
 kaf_obj.saveToFile(sys.stdout)
 logging.debug('Finished ok')
 
