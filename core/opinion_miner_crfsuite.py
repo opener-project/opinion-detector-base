@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 
+## LIST OF CHANGES
+# Ruben 8-nov-2013: adapted to read/write both KAF/NAF --input=kaf|naf default KAF
+#
+################
+
+__desc='VUA opinion miner. CRF deluxe'
+__last_edited='8nov2013'
+__version='1.1'
+
 
 import sys
 import getopt
@@ -10,6 +19,10 @@ from subprocess import Popen,PIPE
 from my_lib import extract_groups,get_distance
 import tempfile
 import os
+
+from extract_features_kaf import extract_features_kaf
+from extract_features_naf import extract_features_naf
+
 from feats_to_crf import extract_features
 
 this_folder = os.path.dirname(os.path.realpath(__file__))
@@ -20,12 +33,7 @@ sys.path.append(os.path.join(this_folder, 'site-packages/pre_build'))
 sys.path.append(os.path.join(this_folder, 'site-packages/pre_install'))
 
 from lxml import etree
-from VUKafParserPy import KafParser
 
-
-__desc='VUA opinion miner. CRF deluxe'
-__last_edited='4nov2013'
-__version='1.0'
 # Path to the locally installed version of crfsuite.
 CRF_SUITE_PATH = os.path.join(this_folder, 'vendor/build/bin/crfsuite')
 #CRF_SUITE_PATH = '/Users/ruben/NLP_tools/crfsuite-0.12/bin/crfsuite'
@@ -119,110 +127,106 @@ class Opinion:
 ######## MAIN ROUTINE ############
 
 ## Check if we are reading from a pipeline
+
+
 if sys.stdin.isatty():
     print>>sys.stderr,'Input stream required.'
-    print>>sys.stderr,'Example usage: cat myUTF8file.kaf.xml |',sys.argv[0]
+    print>>sys.stderr,'Example usage: cat myUTF8file.kaf.xml |',sys.argv[0],' OPTS'
+    print>>sys.stderr,'OPTIONS:'
+    print>>sys.stderr,'\t--no-time : for excluding the timestamp in the header of the output XML'
+    print>>sys.stderr,'\t--input=FORMAT : input formaf where FORMAT can be KAF or NAF'
+    
     sys.exit(-1)
 ########################################
 
 logging.basicConfig(stream=sys.stderr,format='%(asctime)s - %(levelname)s\n\t%(message)s',level=logging.DEBUG)
-
+valid_input_formats = ['kaf','naf']
 
 ## Processing the parameters
 my_time_stamp = True
+input_format = "kaf"
+
 try:
-    opts, args = getopt.getopt(sys.argv[1:],"",["no-time"])
+    opts, args = getopt.getopt(sys.argv[1:],"",["no-time","input="])
     for opt, arg in opts:
         if opt == "--no-time":
             my_time_stamp = False
+        elif opt == '--input':
+            input_format = arg.lower()
 except getopt.GetoptError:
     pass
 #########################################
 
+if input_format not in valid_input_formats:
+    print>>sys.stderr,'Input format',input_format,' not recognized'
+    print>>sys.stderr,'Valid formats: ',valid_input_formats
+    print>>sys.stderr,'Default (without --input param) KAF is considered'
+    sys.exit(0)
+
 logging.debug('Include timestamp: '+str(my_time_stamp))
 
-# Parsing the KAF file
-try:
-    kaf_obj = KafParser(sys.stdin)
-except Exception as e:
-    print>>sys.stderr,'Error parsing input'
-    print>>sys.stderr,'Stream input must be a valid KAF file'
-    print>>sys.stderr,'Error: ',str(e)
-    sys.exit(-1)
-
-
-my_lang = kaf_obj.getLanguage()
-
-if my_lang == 'nl':
-  __crfsuite_model = __crfsuite_model_nl
-elif my_lang == 'en':
-  __crfsuite_model = __crfsuite_model_en
-else:
-  print>>sys.stderr,'Error, the language is "'+my_lang+'" and only can be "nl" for Dutch or "en" for English'
-  sys.exit(-1)
-
-
-logging.debug('Language of the KAF file:'+my_lang)
-logging.debug('Model for crfsuite '+ __crfsuite_model)
-
-## Extracting tokens
+## These are the features extracted
 token_data = {} ## token_data['w_1'] = ('house','s_1')
 tokens_in_order = []
-for token, s_id, w_id in kaf_obj.getTokens():
-  token_data[w_id] = (token,s_id)
-  tokens_in_order.append(w_id)
-
-
-## Extracting terms
-term_data = {}
+term_data = {}  # tid --> (term_lemma,term_pos,term_span,polarity,modifier)
 term_for_token = {}
-for term_obj in kaf_obj.getTerms():
-  term_id = str(term_obj.getId())
-  term_lemma = term_obj.getLemma()
-  #if term_lemma is None:
-  #  term_lemma = 'None'
-  term_pos = term_obj.getPos()
-  #if term_pos is None:
-  #  term_pos = 'None'
-    
-  term_span = term_obj.get_list_span()
-  polarity = term_obj.get_polarity()
-  #if polarity is None: polarity = 'None'
-  
-  modifier = str(term_obj.get_sentiment_modifier())
-  #if modifier is None: modifier = 'None'
-  
-  #print>>sys.stderr,term_id.encode('utf-8'),term_lemma.encode('utf-8'),term_pos.encode('utf-8'),term_span,polarity.encode('utf-8'),modifier.encode('utf-8')
-
-  term_data[term_id] = (term_lemma,term_pos,term_span,polarity,modifier)
-  for tok_id in term_span:
-    term_for_token[tok_id] = term_id
-
-## Extracting entities
 entity_for_term = {}
-for ent_obj in kaf_obj.getSingleEntities():
-  for t_id in ent_obj.get_span():
-    entity_for_term[t_id] = ent_obj.get_type()
-print>>sys.stderr,'Entities:'+str(entity_for_term)
-
-## Extracting properties
 property_for_term = {}
-for prop_obj in kaf_obj.getSingleProperties():
-  for t_id in prop_obj.get_span():
-    property_for_term[t_id] = prop_obj.get_type()
-print>>sys.stderr,'Properties:'+str(property_for_term)
 
 
+__crfsuite_model = None
+if input_format == 'kaf':
+    from VUKafParserPy import KafParser
+   
+    # Parsing the KAF file
+    try:
+        kaf_obj = KafParser(sys.stdin)
+    except Exception as e:
+        print>>sys.stderr,'Error parsing input'
+        print>>sys.stderr,'Stream input must be a valid KAF file'
+        print>>sys.stderr,'Error: ',str(e)
+        sys.exit(-1)
 
-## Detect the opinion expressions
-## Features:
-## tok#Our lem#our pos#Q pol#NoPol
-## Possible values for pol: 4642 NoPol
-## intensifier
-## negative
-## polarityShifter
-## positive
-## weakener
+
+    my_lang = kaf_obj.getLanguage()
+    if my_lang == 'nl':
+        __crfsuite_model = __crfsuite_model_nl
+    elif my_lang == 'en':
+        __crfsuite_model = __crfsuite_model_en
+    else:
+        print>>sys.stderr,'Error, the language is "'+my_lang+'" and only can be "nl" for Dutch or "en" for English'
+        sys.exit(-1)
+
+    logging.debug('Language of the KAF file:'+my_lang)
+    logging.debug('Model for crfsuite '+ __crfsuite_model)
+    token_data, tokens_in_order, term_data, term_for_token, entity_for_term, property_for_term = extract_features_kaf(kaf_obj)
+elif input_format == 'naf':
+    from NafParserPy import *
+   
+    # Parsing the KAF file
+    try:
+        naf_obj = NafParser(sys.stdin)
+    except Exception as e:
+        print>>sys.stderr,'Error parsing input'
+        print>>sys.stderr,'Stream input must be a valid NAF file'
+        print>>sys.stderr,'Error: ',str(e)
+        sys.exit(-1)
+
+
+    my_lang = naf_obj.get_language()
+    
+    if my_lang == 'nl':
+        __crfsuite_model = __crfsuite_model_nl
+    elif my_lang == 'en':
+        __crfsuite_model = __crfsuite_model_en
+    else:
+        print>>sys.stderr,'Error, the language is "'+my_lang+'" and only can be "nl" for Dutch or "en" for English'
+        sys.exit(-1)
+
+    logging.debug('Language of the NAF file:'+my_lang)
+    logging.debug('Model for crfsuite '+ __crfsuite_model)
+    token_data, tokens_in_order, term_data, term_for_token, entity_for_term, property_for_term = extract_features_naf(naf_obj)
+
 
 sentences = []
 previous = 'BEGIN'
@@ -244,6 +248,7 @@ if len(current)!=0: sentences.append(current)
 #    2) Call to the program to convert from this features to the CRF features
 #    3) Call to the crfsuite tagger
 ###############
+opinions_found = []
 for sent in sentences:
   fic = tempfile.NamedTemporaryFile(delete=False)
   list_term_ids = []
@@ -344,16 +349,64 @@ for sent in sentences:
       my_opinion.hol_ids = candi_hol_sorted[0][0]
 
     #my_opinion.map_to_terms(term_for_token)
-    opinion_xml = my_opinion.convert_to_xml()
-    kaf_obj.addElementToLayer('opinions', opinion_xml)
+    opinions_found.append(my_opinion)
     logging.debug('OPINION FINAL:'+str(my_opinion))
 
 
   ## NEXT SENTENCE
+##Process done
+if input_format == 'kaf':
+    for my_opinion in opinions_found:
+        opinion_xml = my_opinion.convert_to_xml()
+        kaf_obj.addElementToLayer('opinions', opinion_xml)
 
-
-kaf_obj.addLinguisticProcessor(__desc,__last_edited+'_'+__version,'opinions', my_time_stamp)
-kaf_obj.saveToFile(sys.stdout)
+    kaf_obj.addLinguisticProcessor(__desc,__last_edited+'_'+__version,'opinions', my_time_stamp)
+    kaf_obj.saveToFile(sys.stdout)
+elif input_format == 'naf':
+    for num_opinion, my_opinion in enumerate(opinions_found):
+        ##Creating holder
+        span_hol = Cspan()
+        span_hol.create_from_ids(my_opinion.hol_ids)
+        my_hol = Cholder()
+        my_hol.set_span(span_hol)
+        ###########################
+        
+        #Creating target
+        span_tar = Cspan()
+        span_tar.create_from_ids(my_opinion.tar_ids)
+        my_tar = Ctarget()
+        my_tar.set_span(span_tar)
+        #########################
+        
+        ##Creating expression
+        span_exp = Cspan()
+        span_exp.create_from_ids(my_opinion.exp_ids)
+        my_exp = Cexpression()
+        my_exp.set_span(span_exp)
+        pol = my_opinion.polarity
+        if pol == 'positiveExpression': pol='positive'
+        elif pol == 'negativeExpression': pol='negative'
+        my_exp.set_polarity(pol)
+        my_exp.set_strength(str(my_opinion.strength))
+        
+        new_opinion = Copinion()
+        new_opinion.set_id('o'+str(num_opinion+1))
+        new_opinion.set_holder(my_hol)
+        new_opinion.set_target(my_tar)
+        new_opinion.set_expression(my_exp)
+        
+        naf_obj.add_opinion(new_opinion)
+        
+                
+    my_lp = Clp()
+    my_lp.set_name(__desc)
+    my_lp.set_version(__last_edited+'_'+__version)
+    if my_time_stamp:
+        my_lp.set_timestamp()   ##Set to the current date and time
+    else:
+        my_lp.set_timestamp('*') 
+    naf_obj.add_linguistic_processor('opinions',my_lp)
+    naf_obj.dump()
+    
 logging.debug('Finished ok')
-
 sys.exit(0)
