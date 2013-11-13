@@ -5,7 +5,7 @@ Feature: Using files as input and output
 
   Scenario Outline: Extract opinions from KAF
     Given the fixture file "<input_file>"
-    And I put it through the kernel
+    And I put them through the kernel
     Then the output should match the fixture "<output_file>"
   Examples:
     | language | input_file            | output_file            |
