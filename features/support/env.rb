@@ -7,5 +7,8 @@ def kernel_root
 end
 
 def kernel(language)
-  return Opener::OpinionDetectors::Base.new(:language => language, :args => ['-t'])
+  return Opener::OpinionDetectors::Base.new(
+    :language => language,
+    :args => ['--no-time']
+  )
 end
