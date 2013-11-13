@@ -6,7 +6,7 @@
       <lp timestamp="2013-04-11T11:11:29CEST" version="1.0" name="Open-nlp tokenizer"/>
     </linguisticProcessors>
     <linguisticProcessor layer="opinions">
-      <lp timestamp="*" version="1.0" name="Crfsuite machine learning opinion miner"/>
+      <lp timestamp="*" version="8nov2013_1.1" name="VUA opinion miner. CRF deluxe"/>
     </linguisticProcessor>
     <linguisticProcessor layer="properties">
       <lp timestamp="2013-04-11T11:12:43CEST" version="1.0" name="Lite PropRecognizer_lookup"/>
