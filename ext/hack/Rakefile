@@ -15,7 +15,7 @@ task :configuration => :requirements do
   create_configuration_script
 end
 
-task :default => [:compile, :create_configuration] do
+task :default => [:compile, :configuration] do
   path = File.join(PYTHON_SITE_PACKAGES, 'pre_install')
 
   pip_install(PRE_INSTALL_REQUIREMENTS, path)
