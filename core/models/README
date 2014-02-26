@@ -1,9 +1,0 @@
-Models trained for nl and en, in the corresponding folders
-In each folder also the training data (both in TAB and CRF format) can be
-found
-
-
-Models
-=====
-+ 10-jun-2013 --> first models trained with basic features
-+ 19-jun-2013 --> expanded the size of the context
