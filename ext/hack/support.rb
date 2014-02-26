@@ -85,18 +85,4 @@ def compile_vendored_code
     sh 'mv svm_classify svm_learn ../../build/bin'
     sh 'make clean'
   end
-
-
-end
-
-##
-# Creates an annotation configuration script based on the location of
-# compiled binaries
-#
-def create_configuration_script
-  Dir.chdir(CORE_DIR) do
-    template = File.expand_path('../../../core/annotation.cfg.erb', __FILE__)
-    output   = File.expand_path('../../../core/annotation.cfg', __FILE__)
-    sh "erb #{template} > #{output}"
-  end
 end

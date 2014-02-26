@@ -11,10 +11,6 @@ task :compile => :requirements do
   compile_vendored_code
 end
 
-task :configuration => :requirements do
-  create_configuration_script
-end
-
 task :default => [:compile, :configuration] do
   path = File.join(PYTHON_SITE_PACKAGES, 'pre_install')
 
