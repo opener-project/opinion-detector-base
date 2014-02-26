@@ -17,11 +17,12 @@ module Opener
     #  @return [Hash]
     #
     class Base
-      attr_reader :args, :options
+      attr_reader :args, :options, :conf_file
 
       def initialize(options = {})
         @args          = options.delete(:args) || []
         @options       = options
+        @conf_file = ConfigurationCreator.new.config_file_path
       end
 
       ##
@@ -30,7 +31,7 @@ module Opener
       # @param [Array] args Commandline arguments passed to the command.
       #
       def command
-        return "python -E -OO #{kernel} #{configuration} #{args.join(' ')}"
+        return "python -E -OO #{kernel} #{conf_file.path} #{args.join(' ')}"
       end
 
       ##
@@ -60,10 +61,6 @@ module Opener
         return File.join(core_dir, 'python-scripts/classify_kaf_naf_file.py')
       end
 
-      def configuration
-        return @configuration unless @configuration.nil?
-        @configuration = ConfigurationCreator.new.config_file_path
-      end
     end # Base
 
 
@@ -81,7 +78,7 @@ module Opener
         file.write(render)
         file.close
 
-        return file.path
+        return file
       end
 
       def render
