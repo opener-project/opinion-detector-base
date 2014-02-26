@@ -123,7 +123,6 @@ path_to_binary_classify = <%= svm_classify_path %>
         binding
       end
 
-
     end
   end # OpinionDetectors
 end # Opener
