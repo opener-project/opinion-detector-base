@@ -1,0 +1,3 @@
+[submodule "core/python-scripts"]
+	path = core/python-scripts
+	url = https://github.com/opener-project/opinion_miner_deluxe

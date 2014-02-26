@@ -26,7 +26,7 @@ module Opener
       # @param [Array] args Commandline arguments passed to the command.
       #
       def command
-        return "python -E -O #{kernel} #{args.join(' ')}"
+        return "python -E -OO #{kernel} #{configuration} #{args.join(' ')}"
       end
 
       ##
@@ -53,15 +53,19 @@ module Opener
       # @return [String]
       #
       def kernel
-        return File.join(core_dir, 'opinion_miner_crfsuite.py')
+        return File.join(core_dir, 'python-scripts/classify_kaf_naf_file.py')
+      end
+
+      def configuration
+        return File.join(core_dir, 'annotation.cfg')
       end
     end # Base
-    
+
     class EN < Base
     end # EN
-    
+
     class NL < Base
     end # NL
-    
+
   end # OpinionDetectors
 end # Opener

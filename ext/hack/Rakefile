@@ -11,8 +11,13 @@ task :compile => :requirements do
   compile_vendored_code
 end
 
-task :default => [:compile] do
+task :configuration => :requirements do
+  create_configuration_script
+end
+
+task :default => [:compile, :create_configuration] do
   path = File.join(PYTHON_SITE_PACKAGES, 'pre_install')
 
   pip_install(PRE_INSTALL_REQUIREMENTS, path)
+
 end

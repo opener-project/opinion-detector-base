@@ -1,0 +1,9 @@
+[general]
+output_folder = <%= File.expand_path("../models", __FILE__) %>
+
+[crfsuite]
+path_to_binary = <%= File.expand_path("../vendor/build/bin/crfsuite",__FILE__) %>
+
+[svmlight]
+path_to_binary_learn = <%= File.expand_path("../vendor/build/bin/svm_learn", __FILE__) %>
+path_to_binary_classify = <%= File.expand_path("../vendor/build/bin/svm_classify", __FILE__) %>

@@ -4,6 +4,9 @@ include Opener::BuildTools::Requirements
 include Opener::BuildTools::Python
 include Opener::BuildTools::Files
 
+# Directory of the core
+CORE_DIR = File.expand_path('../../../core', __FILE__)
+
 # Directory where packages will be installed to.
 PYTHON_SITE_PACKAGES = File.expand_path(
   '../../../core/site-packages',
@@ -38,6 +41,7 @@ VENDOR_BUILD_DIRECTORY = File.expand_path(
 
 # Path to the directory that contains the source C code to compile.
 VENDOR_SRC_DIRECTORY = File.expand_path('../../../core/vendor/src', __FILE__)
+
 
 ##
 # Verifies the requirements to install thi Gem.
@@ -74,5 +78,25 @@ def compile_vendored_code
 
   Dir.chdir(File.join(src, "crfsuite")) do
     compile("--prefix=#{build}", "--with-liblbfgs=#{build}")
+  end
+
+  Dir.chdir(File.join(src, "svm_light")) do
+    sh 'make'
+    sh 'mv svm_classify svm_learn ../../build/bin'
+    sh 'make clean'
+  end
+
+
+end
+
+##
+# Creates an annotation configuration script based on the location of
+# compiled binaries
+#
+def create_configuration_script
+  Dir.chdir(CORE_DIR) do
+    template = File.expand_path('../../../core/annotation.cfg.erb', __FILE__)
+    output   = File.expand_path('../../../core/annotation.cfg', __FILE__)
+    sh "erb #{template} > #{output}"
   end
 end

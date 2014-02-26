@@ -27,8 +27,13 @@ task :clean => [
 desc 'Alias for python:compile'
 task :compile do
   compile_vendored_code
-
   Rake::Task['python:compile'].invoke
+  Rake::Task['configuration'].invoke
+end
+
+desc 'Create configuration file with proper paths to compiled binaries'
+task :configuration do
+  create_configuration_script
 end
 
 desc 'Runs the tests'
