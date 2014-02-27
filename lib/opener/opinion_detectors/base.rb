@@ -33,9 +33,7 @@ module Opener
       # @param [Array] args Commandline arguments passed to the command.
       #
       def command
-        cmd = "#{adjust_python_path} python -E -OO #{kernel} #{conf_file.path} #{args.join(' ')}"
-        puts cmd
-        return cmd
+        return "#{adjust_python_path} python -E -OO #{kernel} #{conf_file.path} #{args.join(' ')}"
       end
 
       ##
