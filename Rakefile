@@ -24,16 +24,13 @@ task :clean => [
   'clean:gems'
 ]
 
-desc 'Alias for python:compile'
-task :compile do
+desc 'Compile all C code'
+task :compile_c do
   compile_vendored_code
-  Rake::Task['python:compile'].invoke
 end
 
-desc 'Create configuration file with proper paths to compiled binaries'
-task :configuration do
-  create_configuration_script
-end
+desc 'Compiles everything'
+task :compile => [:compile_c, 'python:compile']
 
 desc 'Runs the tests'
 task :test => :compile do
