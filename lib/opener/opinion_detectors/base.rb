@@ -1,8 +1,10 @@
 require 'open3'
-require 'erb'
-require 'tempfile'
 
 require_relative 'base/version'
+require_relative 'configuration_creator'
+require_relative 'en'
+require_relative 'nl'
+
 
 module Opener
   module OpinionDetectors
@@ -31,7 +33,9 @@ module Opener
       # @param [Array] args Commandline arguments passed to the command.
       #
       def command
-        return "python -E -OO #{kernel} #{conf_file.path} #{args.join(' ')}"
+        cmd = "#{adjust_python_path} python -E -OO #{kernel} #{conf_file.path} #{args.join(' ')}"
+        puts cmd
+        return cmd
       end
 
       ##
@@ -46,6 +50,14 @@ module Opener
       end
 
       protected
+      ##
+      # @return [String]
+      #
+      def adjust_python_path
+        site_packages =  File.join(core_dir, 'site-packages')
+        "env PYTHONPATH=#{site_packages}:$PYTHONPATH"
+      end
+
 
       ##
       # @return [String]
@@ -62,67 +74,5 @@ module Opener
       end
 
     end # Base
-
-
-    class EN < Base
-    end # EN
-
-    class NL < Base
-    end # NL
-
-    class ConfigurationCreator
-      include ERB::Util
-
-      def config_file_path
-        file = Tempfile.new('opinion-detector-config')
-        file.write(render)
-        file.close
-
-        return file
-      end
-
-      def render
-        ERB.new(template).result(binding)
-      end
-
-      def models_path
-        env_path = ENV["OPINION_DETECTOR_MODELS_PATH"]
-        return env_path unless env_path.nil?
-
-        raise ModelsMissing, "Please provide an environment variable named
-          OPINION_DETECTOR_MODELS_PATH that contains the path to the models"
-      end
-
-      def crfsuite_path
-        File.expand_path("../../../../core/vendor/build/bin/crfsuite",__FILE__)
-      end
-
-      def svm_learn_path
-        File.expand_path("../../../../core/vendor/build/bin/svm_learn", __FILE__)
-      end
-
-      def svm_classify_path
-        File.expand_path("../../../../core/vendor/build/bin/svm_classify", __FILE__)
-      end
-
-      def template
-        %{
-[general]
-output_folder = <%=models_path%>
-
-[crfsuite]
-path_to_binary = <%= crfsuite_path %>
-
-[svmlight]
-path_to_binary_learn = <%= svm_learn_path %>
-path_to_binary_classify = <%= svm_classify_path %>
-        }
-      end
-
-      def get_binding
-        binding
-      end
-
-    end
   end # OpinionDetectors
 end # Opener
