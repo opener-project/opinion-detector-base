@@ -43,7 +43,7 @@ module Opener
       # @return [Array]
       #
       def run(input)
-        return Open3.capture3(command, :stdin_data => input)
+        return Open3.capture3(*command.split(" "), :stdin_data => input)
       end
 
       protected
