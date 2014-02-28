@@ -5,7 +5,6 @@ require_relative 'configuration_creator'
 require_relative 'en'
 require_relative 'nl'
 
-
 module Opener
   module OpinionDetectors
     class ModelsMissing < StandardError; end
