@@ -15,7 +15,6 @@ Gem::Specification.new do |gem|
   gem.files       = (`git ls-files`.split("\n") + generated).sort
   gem.executables = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files  = gem.files.grep(%r{^(test|spec|features)/})
-  gem.extensions  = ['ext/hack/Rakefile']
 
   gem.add_dependency 'opener-build-tools', ['>= 0.2.7']
   gem.add_dependency 'rake'
