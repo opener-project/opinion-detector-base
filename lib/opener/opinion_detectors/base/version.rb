@@ -5,5 +5,3 @@ module Opener
     end
   end
 end
-
-
