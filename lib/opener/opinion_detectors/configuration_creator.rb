@@ -4,7 +4,13 @@ require 'tempfile'
 module Opener
   module OpinionDetectors
     class ConfigurationCreator
+      attr_reader :language
+
       include ERB::Util
+
+      def intialize(language)
+        @language = language
+      end
 
       def config_file_path
         file = Tempfile.new('opinion-detector-config')
@@ -18,12 +24,18 @@ module Opener
         ERB.new(template).result(binding)
       end
 
+      def language
+      end
+
       def models_path
         env_path = ENV["OPINION_DETECTOR_MODELS_PATH"]
-        return env_path unless env_path.nil?
+        if env_path.nil?
+          raise ModelsMissing, "Please provide an environment variable named
+            OPINION_DETECTOR_MODELS_PATH that contains the path to the models"
+        end
 
-        raise ModelsMissing, "Please provide an environment variable named
-          OPINION_DETECTOR_MODELS_PATH that contains the path to the models"
+        path = File.expand_path("hotel_#{language}", env_path)
+        return path
       end
 
       def crfsuite_path

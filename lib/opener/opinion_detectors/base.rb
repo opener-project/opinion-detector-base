@@ -23,7 +23,6 @@ module Opener
       def initialize(options = {})
         @args          = options.delete(:args) || []
         @options       = options
-        @conf_file = ConfigurationCreator.new.config_file_path
       end
 
       ##
@@ -43,6 +42,8 @@ module Opener
       # @return [Array]
       #
       def run(input)
+        language = language(input)
+        @conf_file = ConfigurationCreator.new(language).config_file_path
         return Open3.capture3(*command.split(" "), :stdin_data => input)
       end
 
@@ -68,6 +69,15 @@ module Opener
       #
       def kernel
         return File.join(core_dir, 'python-scripts/classify_kaf_naf_file.py')
+      end
+
+      ##
+      # @return the language from the KAF
+      #
+      def language(input)
+        document = Nokogiri::XML(input)
+        language = document.at('KAF').attr('xml:lang')
+        return language
       end
 
     end # Base
