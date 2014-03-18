@@ -8,7 +8,7 @@ module Opener
 
       include ERB::Util
 
-      def intialize(language)
+      def initialize(language)
         @language = language
       end
 
@@ -22,9 +22,6 @@ module Opener
 
       def render
         ERB.new(template).result(binding)
-      end
-
-      def language
       end
 
       def models_path

@@ -1,3 +1,4 @@
+require 'nokogiri'
 require 'open3'
 
 require_relative 'base/version'
