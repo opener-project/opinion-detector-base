@@ -5,6 +5,8 @@ require_relative 'base/version'
 require_relative 'configuration_creator'
 require_relative 'en'
 require_relative 'nl'
+require_relative 'de'
+require_relative 'it'
 
 module Opener
   module OpinionDetectors

@@ -1,7 +1,7 @@
 module Opener
   module OpinionDetectors
-    class Base
-      VERSION = "1.1.0"
-    end
+    class DE < Base
+    end # EN
   end
 end
+
