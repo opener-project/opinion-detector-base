@@ -9,7 +9,7 @@ else
   input = STDIN.read
 end
 
-kernel                  = Opener::OpinionDetectors::Base.new(:args => ARGV)
+kernel = Opener::OpinionDetectors::Base.new(:args => ARGV)
 stdout, stderr, process = kernel.run(input)
 
 if process.success?
