@@ -5,15 +5,15 @@
       <lp timestamp="2013-04-11T09:21:29CEST" version="1.0" name="Open-nlp sentence splitter"/>
       <lp timestamp="2013-04-11T09:21:29CEST" version="1.0" name="Open-nlp tokenizer"/>
     </linguisticProcessors>
-    <linguisticProcessor layer="opinions">
-      <lp timestamp="*" version="8nov2013_1.1" name="VUA opinion miner. CRF deluxe"/>
-    </linguisticProcessor>
     <linguisticProcessor layer="terms">
       <lp timestamp="2013-04-11T09:23:08CEST" version="1.0" name="Basic_polarity_tagger_with_pos"/>
     </linguisticProcessor>
     <linguisticProcessor layer="term">
       <lp timestamp="2013-04-11T09:23:07CEST" version="1.0" name="TreeTagger_from_kaf"/>
     </linguisticProcessor>
+    <linguisticProcessors layer="opinions">
+      <lp name="Deluxe opinion miner (CRF+SVM)" version="10jan2014_2.0" timestamp="*"/>
+    </linguisticProcessors>
   </kafHeader>
   <text>
     <wf wid="w_1" sent="s_1">This</wf>
@@ -81,16 +81,10 @@
   </entities>
   <opinions>
     <opinion oid="o1">
-      <opinion_holder>
-        <span/>
-      </opinion_holder>
-      <opinion_target>
+      <opinion_expression polarity="negative" strength="1">
+        <!--a very nice hotel in Amsterdam-->
         <span>
-          <target id="t_1"/>
-        </span>
-      </opinion_target>
-      <opinion_expression polarity="positive" strength="1">
-        <span>
+          <target id="t_3"/>
           <target id="t_4"/>
           <target id="t_5"/>
           <target id="t_6"/>

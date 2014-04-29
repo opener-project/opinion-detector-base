@@ -5,9 +5,6 @@
       <lp timestamp="2013-04-11T11:11:29CEST" version="1.0" name="Open-nlp sentence splitter"/>
       <lp timestamp="2013-04-11T11:11:29CEST" version="1.0" name="Open-nlp tokenizer"/>
     </linguisticProcessors>
-    <linguisticProcessor layer="opinions">
-      <lp timestamp="*" version="8nov2013_1.1" name="VUA opinion miner. CRF deluxe"/>
-    </linguisticProcessor>
     <linguisticProcessor layer="properties">
       <lp timestamp="2013-04-11T11:12:43CEST" version="1.0" name="Lite PropRecognizer_lookup"/>
     </linguisticProcessor>
@@ -17,6 +14,9 @@
     <linguisticProcessor layer="term">
       <lp timestamp="2013-04-11T11:12:42CEST" version="1.0" name="TreeTagger_from_kaf"/>
     </linguisticProcessor>
+    <linguisticProcessors layer="opinions">
+      <lp name="Deluxe opinion miner (CRF+SVM)" version="10jan2014_2.0" timestamp="*"/>
+    </linguisticProcessors>
   </kafHeader>
   <text>
     <wf wid="w_1" sent="s_1">This</wf>
@@ -108,15 +108,15 @@
   </properties>
   <opinions>
     <opinion oid="o1">
-      <opinion_holder>
-        <span/>
-      </opinion_holder>
       <opinion_target>
+        <!--The bed-->
         <span>
-          <target id="t_1"/>
+          <target id="t_8"/>
+          <target id="t_9"/>
         </span>
       </opinion_target>
       <opinion_expression polarity="positive" strength="1">
+        <!--very nice-->
         <span>
           <target id="t_4"/>
           <target id="t_5"/>
@@ -124,16 +124,15 @@
       </opinion_expression>
     </opinion>
     <opinion oid="o2">
-      <opinion_holder>
-        <span/>
-      </opinion_holder>
       <opinion_target>
+        <!--The bed-->
         <span>
           <target id="t_8"/>
           <target id="t_9"/>
         </span>
       </opinion_target>
       <opinion_expression polarity="negative" strength="1">
+        <!--awful-->
         <span>
           <target id="t_11"/>
         </span>

@@ -5,15 +5,15 @@
       <lp timestamp="2013-05-06T10:46:10CEST" version="1.0" name="Open-nlp sentence splitter"/>
       <lp timestamp="2013-05-06T10:46:10CEST" version="1.0" name="Open-nlp tokenizer"/>
     </linguisticProcessors>
-    <linguisticProcessor layer="opinions">
-      <lp timestamp="*" version="8nov2013_1.1" name="VUA opinion miner. CRF deluxe"/>
-    </linguisticProcessor>
     <linguisticProcessor layer="terms">
       <lp timestamp="2013-05-06T10:46:12CEST" version="1.0" name="Basic_polarity_tagger_with_pos"/>
     </linguisticProcessor>
     <linguisticProcessor layer="term">
       <lp timestamp="2013-05-06T10:46:22CEST" version="1.0" name="Open nlp pos tagger"/>
     </linguisticProcessor>
+    <linguisticProcessors layer="opinions">
+      <lp name="Deluxe opinion miner (CRF+SVM)" version="10jan2014_2.0" timestamp="*"/>
+    </linguisticProcessors>
   </kafHeader>
   <text>
     <wf wid="w_1" sent="1">Dit</wf>
@@ -65,16 +65,18 @@
   </terms>
   <opinions>
     <opinion oid="o1">
-      <opinion_holder>
-        <span/>
-      </opinion_holder>
       <opinion_target>
+        <!--hotel-->
         <span>
           <target id="t_6"/>
         </span>
       </opinion_target>
       <opinion_expression polarity="positive" strength="1">
+        <!--Dit is een heel mooi-->
         <span>
+          <target id="t_1"/>
+          <target id="t_2"/>
+          <target id="t_3"/>
           <target id="t_4"/>
           <target id="t_5"/>
         </span>

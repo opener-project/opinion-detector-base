@@ -9,6 +9,7 @@ end
 def kernel(language)
   return Opener::OpinionDetectors::Base.new(
     :language => language,
-    :args => ['--no-time']
+    # why doesn't this option work?
+    #:args => ['--no-time']
   )
 end
