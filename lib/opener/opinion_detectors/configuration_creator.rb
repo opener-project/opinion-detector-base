@@ -24,9 +24,6 @@ module Opener
         ERB.new(template).result(binding)
       end
 
-      def language
-      end
-
       def models_path
         env_path = ENV["OPINION_DETECTOR_MODELS_PATH"]
         if env_path.nil?
