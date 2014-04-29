@@ -8,7 +8,7 @@ module Opener
 
       include ERB::Util
 
-      def intialize(language)
+      def initialize(language)
         @language = language
       end
 
