@@ -45,3 +45,5 @@ core/vendor/build/*
 !.gitkeep
 
 *.log
+tmp/*
+opinion-detector-models/*
