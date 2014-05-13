@@ -21,7 +21,7 @@ module Opener
     #  @return [Hash]
     #
     class Base
-      attr_reader :args, :options, :conf_file
+      attr_reader :args, :options, :conf_file, :models_path
 
       def initialize(options = {})
         @args          = options.delete(:args) || []
@@ -34,7 +34,7 @@ module Opener
       # @param [Array] args Commandline arguments passed to the command.
       #
       def command
-        return "#{adjust_python_path} python -E -OO #{kernel} #{conf_file.path} #{args.join(' ')}"
+        return "#{adjust_python_path} python -E -OO #{kernel} -m #{conf_file.path} #{args.join(' ')}"
       end
 
       ##
@@ -46,7 +46,9 @@ module Opener
       #
       def run(input)
         language = language(input)
-        @conf_file = ConfigurationCreator.new(language).config_file_path
+        conf = ConfigurationCreator.new(language)
+        @conf_file = conf.config_file_path
+        @models_path = conf.models_path
         capture(input)
       end
 
