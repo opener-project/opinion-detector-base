@@ -53,9 +53,9 @@ module Opener
 output_folder = <%=models_path%>/hotel_cfg1
 
 [feature_templates]
-expression = <%=models_path%>/hotel_cfg1/feature_templates/templates_expr.txt
-holder = <%=models_path%>/hotel_cfg1/feature_templates/templates_holder.txt
-target = <%=models_path%>/hotel_cfg1/feature_templates/templates_target.txt
+expression = <%=models_path%>/hotel_cfg1/feature_templates/feat_template_expr.txt
+holder = <%=models_path%>/hotel_cfg1/feature_templates/feat_template_holder.txt
+target = <%=models_path%>/hotel_cfg1/feature_templates/feat_template_target.txt
 
 [valid_opinions]
 negative = Negative;StrongNegative
