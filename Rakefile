@@ -37,8 +37,14 @@ task :test => :compile do
   sh('cucumber features')
 end
 
+desc 'Updates the Git submodules'
+task :submodules do
+  sh 'git submodule init'
+  sh 'git submodule update'
+end
+
 desc 'Performs preparations for building the Gem'
-task :before_build => [:requirements, 'python:clean:bytecode'] do
+task :before_build => [:submodules, :requirements, 'python:clean:bytecode'] do
   path = File.join(PYTHON_SITE_PACKAGES, 'pre_build')
 
   install_python_packages(PRE_BUILD_REQUIREMENTS, path)
