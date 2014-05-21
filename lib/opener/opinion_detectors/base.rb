@@ -22,10 +22,19 @@ module Opener
     #
     class Base
       attr_reader :args, :options, :conf_file, :models_path
+      
+      ##
+      # Hash containing the default options to use.
+      #
+      # @return [Hash]
+      #
+      DEFAULT_OPTIONS = {
+        :domain => "hotel"
+      }.freeze
 
       def initialize(options = {})
         @args          = options.delete(:args) || []
-        @options       = options
+        @options       = DEFAULT_OPTIONS.merge(options)
       end
 
       ##
@@ -46,7 +55,8 @@ module Opener
       #
       def run(input)
         language = language(input)
-        conf = ConfigurationCreator.new(language)
+        
+        conf = ConfigurationCreator.new(language, options[:domain])
         @conf_file = conf.config_file_path
         @models_path = conf.models_path
         capture(input)

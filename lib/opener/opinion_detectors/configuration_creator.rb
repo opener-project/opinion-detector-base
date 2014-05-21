@@ -4,12 +4,13 @@ require 'tempfile'
 module Opener
   module OpinionDetectors
     class ConfigurationCreator
-      attr_reader :language
+      attr_reader :language, :domain
 
       include ERB::Util
 
-      def initialize(language)
+      def initialize(language, domain)
         @language = language
+        @domain = domain
       end
 
       def config_file_path
@@ -50,12 +51,12 @@ module Opener
       def template
         %{
 [general]
-output_folder = <%=models_path%>/hotel_cfg1
+output_folder = <%=models_path%>/<%=domain%>_cfg1
 
 [feature_templates]
-expression = <%=models_path%>/hotel_cfg1/feature_templates/feat_template_expr.txt
-holder = <%=models_path%>/hotel_cfg1/feature_templates/feat_template_holder.txt
-target = <%=models_path%>/hotel_cfg1/feature_templates/feat_template_target.txt
+expression = <%=models_path%>/<%=domain%>_cfg1/feature_templates/feat_template_expr.txt
+holder = <%=models_path%>/<%=domain%>_cfg1/feature_templates/feat_template_holder.txt
+target = <%=models_path%>/<%=domain%>_cfg1/feature_templates/feat_template_target.txt
 
 [valid_opinions]
 negative = Negative;StrongNegative
@@ -64,8 +65,8 @@ positive = Positive;StrongPositive
 [relation_features]
 use_dependencies = True
 use_training_lexicons = True
-use_this_expression_lexicon = <%=models_path%>/hotel_cfg1/lexicons/polarity_lexicon.txt
-use_this_target_lexicon = <%=models_path%>/hotel_cfg1/lexicons/target_lexicon.txt
+use_this_expression_lexicon = <%=models_path%>/<%=domain%>_cfg1/lexicons/polarity_lexicon.txt
+use_this_target_lexicon = <%=models_path%>/<%=domain%>_cfg1/lexicons/target_lexicon.txt
 use_tokens_lemmas = True
 exp_tar_threshold = -0.75
 exp_hol_threshold = -0.5
