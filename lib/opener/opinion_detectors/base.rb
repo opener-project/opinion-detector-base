@@ -23,7 +23,7 @@ module Opener
     #
     class Base
       attr_reader :args, :options, :conf_file, :models_path
-      
+
       ##
       # Hash containing the default options to use.
       #
@@ -74,7 +74,7 @@ module Opener
       # @return [String]
       #
       def adjust_python_path
-        site_packages =  File.join(core_dir, 'site-packages')
+        site_packages =  File.join(core_dir, 'site-packages/pre_install')
 
         return "env PYTHONPATH=#{site_packages}:$PYTHONPATH"
       end
