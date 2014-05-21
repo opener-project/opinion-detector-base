@@ -1,3 +1,0 @@
-git+ssh://git@github.com/opener-project/VU-kaf-parser.git#egg=VUKafParserPy
-core/packages/VUA_pylib-1.5.tar.gz
-core/packages/KafNafParser-1.4.tar.gz
