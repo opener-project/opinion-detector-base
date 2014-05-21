@@ -17,6 +17,7 @@ module Opener
     #
     # @!attribute [r] args
     #  @return [Array]
+    #
     # @!attribute [r] options
     #  @return [Hash]
     #
@@ -32,6 +33,11 @@ module Opener
         :domain => "hotel"
       }.freeze
 
+      ##
+      # @param [Hash] options
+      #
+      # @option options [Array] :args Extra commandline arguments to use.
+      #
       def initialize(options = {})
         @args          = options.delete(:args) || []
         @options       = DEFAULT_OPTIONS.merge(options)
@@ -55,28 +61,30 @@ module Opener
       #
       def run(input)
         language = language(input)
-        
         conf = ConfigurationCreator.new(language, options[:domain])
         @conf_file = conf.config_file_path
         @models_path = conf.models_path
-        capture(input)
+
+        return capture(input)
       end
 
       protected
+
       ##
       # @return [String]
       #
       def adjust_python_path
         site_packages =  File.join(core_dir, 'site-packages')
-        "env PYTHONPATH=#{site_packages}:$PYTHONPATH"
+
+        return "env PYTHONPATH=#{site_packages}:$PYTHONPATH"
       end
-      
+
       ##
-      # capture3 method doesn't work properly with Jruby, so 
+      # capture3 method doesn't work properly with Jruby, so
       # this is a workaround
       #
       def capture(input)
-        Open3.popen3(*command.split(" ")) {|i, o, e, t|
+        return Open3.popen3(*command.split(" ")) {|i, o, e, t|
           out_reader = Thread.new { o.read }
           err_reader = Thread.new { e.read }
           i.write input
@@ -105,9 +113,9 @@ module Opener
       def language(input)
         document = Nokogiri::XML(input)
         language = document.at('KAF').attr('xml:lang')
+
         return language
       end
-
     end # Base
   end # OpinionDetectors
 end # Opener
