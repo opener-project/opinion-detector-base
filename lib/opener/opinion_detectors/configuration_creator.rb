@@ -19,7 +19,7 @@ module Opener
         file.write(render)
         file.close
 
-        return file
+        return file.path
       end
 
       def render
