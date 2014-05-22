@@ -8,9 +8,10 @@ module Opener
 
       include ERB::Util
 
-      def initialize(language, domain)
+      def initialize(language, domain, models_path)
         @language = language
         @domain = domain
+        @models_path = models_path ||= ENV["OPINION_DETECTOR_MODELS_PATH"]
       end
 
       def config_file_path
@@ -26,13 +27,10 @@ module Opener
       end
 
       def models_path
-        env_path = ENV["OPINION_DETECTOR_MODELS_PATH"]
-        if env_path.nil?
-          raise ModelsMissing, "Please provide an environment variable named
-            OPINION_DETECTOR_MODELS_PATH that contains the path to the models"
+        if @models_path.nil?
+          raise ArgumentError, "Can't find a models path, please set the OPINION_DETECTOR_MODELS_PATH env variable"
         end
-
-        path = File.expand_path(language, env_path)
+        path = File.expand_path(language, @models_path)
         return path
       end
 

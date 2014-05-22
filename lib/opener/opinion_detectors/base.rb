@@ -7,6 +7,8 @@ require_relative 'en'
 require_relative 'nl'
 require_relative 'de'
 require_relative 'it'
+require_relative 'fr'
+require_relative 'es'
 
 module Opener
   module OpinionDetectors
@@ -61,7 +63,7 @@ module Opener
       #
       def run(input)
         language = language(input)
-        conf = ConfigurationCreator.new(language, options[:domain])
+        conf = ConfigurationCreator.new(language, options[:domain], options[:resource_path])
         @conf_file = conf.config_file_path
         @models_path = conf.models_path
 
