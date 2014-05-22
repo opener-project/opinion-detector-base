@@ -13,7 +13,6 @@ Gem::Specification.new do |gem|
 
   gem.files = Dir.glob([
     'core/site-packages/pre_build/**/*',
-    'core/packages/**/*',
     'core/python-scripts/**/*',
     'core/vendor/src/**/*',
     'core/*',
