@@ -24,7 +24,7 @@ module Opener
     #  @return [Hash]
     #
     class Base
-      attr_reader :args, :options, :conf_file, :models_path
+      attr_reader :args, :options
 
       ##
       # Hash containing the default options to use.
@@ -41,8 +41,8 @@ module Opener
       # @option options [Array] :args Extra commandline arguments to use.
       #
       def initialize(options = {})
-        @args          = options.delete(:args) || []
-        @options       = DEFAULT_OPTIONS.merge(options)
+        @args    = options.delete(:args) || []
+        @options = DEFAULT_OPTIONS.merge(options)
       end
 
       ##
@@ -50,8 +50,8 @@ module Opener
       #
       # @param [Array] args Commandline arguments passed to the command.
       #
-      def command
-        return "#{adjust_python_path} python -E -OO #{kernel} -m #{conf_file.path} #{args.join(' ')}"
+      def command(config_file)
+        return "#{adjust_python_path} python -OO #{kernel} -m #{config_file} #{args.join(' ')}"
       end
 
       ##
@@ -63,11 +63,13 @@ module Opener
       #
       def run(input)
         language = language(input)
-        conf = ConfigurationCreator.new(language, options[:domain], options[:resource_path])
-        @conf_file = conf.config_file_path
-        @models_path = conf.models_path
+        conf     = ConfigurationCreator.new(
+          language,
+          options[:domain],
+          options[:resource_path]
+        )
 
-        return capture(input)
+        return capture(conf.config_file_path, input)
       end
 
       protected
@@ -82,11 +84,11 @@ module Opener
       end
 
       ##
-      # capture3 method doesn't work properly with Jruby, so
-      # this is a workaround
+      # capture3 method doesn't work properly with Jruby, so this is a
+      # workaround
       #
-      def capture(input)
-        return Open3.popen3(*command.split(" ")) {|i, o, e, t|
+      def capture(config_file, input)
+        return Open3.popen3(*command(config_file).split(" ")) {|i, o, e, t|
           out_reader = Thread.new { o.read }
           err_reader = Thread.new { e.read }
           i.write input
