@@ -18,7 +18,8 @@ module Opener
 
       def config_file_path
         config_file.write(render)
-
+        config_file.rewind
+        
         return config_file.path
       end
       
