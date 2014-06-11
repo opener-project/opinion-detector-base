@@ -5,6 +5,7 @@ module Opener
   module OpinionDetectors
     class ConfigurationCreator
       attr_reader :language, :domain
+      attr_accessor :config_file
 
       include ERB::Util
 
@@ -12,14 +13,17 @@ module Opener
         @language = language
         @domain = domain
         @models_path = models_path ||= ENV["OPINION_DETECTOR_MODELS_PATH"]
+        @config_file = Tempfile.new('opinion-detector-config')
       end
 
       def config_file_path
-        file = Tempfile.new('opinion-detector-config')
-        file.write(render)
-        file.close
+        config_file.write(render)
 
-        return file.path
+        return config_file.path
+      end
+      
+      def close_config
+        config_file.close
       end
 
       def render

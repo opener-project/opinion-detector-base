@@ -68,8 +68,11 @@ module Opener
           options[:domain],
           options[:resource_path]
         )
-
-        return capture(conf.config_file_path, input)
+        stdout, stderr, process = capture(conf.config_file_path, input)
+        conf.close_config
+        
+        
+        return stdout, stderr, process
       end
 
       protected
