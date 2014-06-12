@@ -2,12 +2,7 @@
 
 # C extensions
 *.so
-
-# Installer logs
-pip-log.txt
-
-# Python related files.
-*.py[cod]
+pkg
 Gemfile.lock
 
 # Ignore the package files.
@@ -19,4 +14,3 @@ core/vendor/build/*
 
 *.log
 tmp/*
-opinion-detector-models/*
