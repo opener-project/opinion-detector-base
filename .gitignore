@@ -38,8 +38,8 @@ pip-log.txt
 Gemfile.lock
 
 # Ignore the package files.
-core/site-packages/pre_build/*
-core/site-packages/pre_install/*
+core/site-packages/pre_build
+core/site-packages/pre_install
 core/vendor/build/*
 
 !.gitkeep
