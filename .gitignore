@@ -3,38 +3,11 @@
 # C extensions
 *.so
 
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-var
-sdist
-develop-eggs
-.installed.cfg
-lib64
-pkg
-
 # Installer logs
 pip-log.txt
 
-# Unit test / coverage reports
-.coverage
-.tox
-nosetests.xml
-
-# Translations
-*.mo
-
 # Python related files.
 *.py[cod]
-pip-log.txt
-.mr.developer.cfg
-.project
-.pydevproject
-
 Gemfile.lock
 
 # Ignore the package files.
