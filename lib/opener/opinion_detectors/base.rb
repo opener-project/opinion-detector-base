@@ -59,7 +59,7 @@ module Opener
       # process information.
       #
       # @param [String] input The input to tag.
-      # @return [Array]
+      # @return [String]
       #
       def run(input)
         language = language(input)
@@ -68,11 +68,14 @@ module Opener
           options[:domain],
           options[:resource_path]
         )
+
         stdout, stderr, process = capture(conf.config_file_path, input)
+
         conf.close_config
-        
-        
-        return stdout, stderr, process
+
+        raise stderr unless process.success?
+
+        return stdout
       end
 
       protected
