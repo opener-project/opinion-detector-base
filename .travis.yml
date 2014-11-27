@@ -6,6 +6,13 @@ script: bundle exec rake
 rvm:
   - 2.1
 
+# Currently this repository depends on a proprietary set of models that isn't
+# available for Travis. Until we either generate a dummy set or somehow work
+# around this we'll allow build failures.
+matrix:
+  allow_failures:
+    rvm: 2.1
+
 notifications:
   email:
     recipients:
