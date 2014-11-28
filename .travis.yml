@@ -11,7 +11,7 @@ rvm:
 # around this we'll allow build failures.
 matrix:
   allow_failures:
-    rvm: 2.1
+    - rvm: 2.1
 
 notifications:
   email:
