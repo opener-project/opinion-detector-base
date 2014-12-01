@@ -1,5 +1,3 @@
-[![Build Status](https://drone.io/github.com/opener-project/opinion-detector-base/status.png)](https://drone.io/github.com/opener-project/opinion-detector-base/latest)
-
 Opinion Detector Base
 =====================
 
